@@ -1,18 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 
-export default function hero() {
+export default function Hero() {
   return (
-    <section className="relative flex min-h-screen w-full flex-col items-center justify-center bg-white px-6 md:flex-row md:justify-between md:px-20 overflow-hidden">
-      
-      <nav className="absolute top-10 left-10 hidden md:block">
-        <ul className="flex flex-col gap-1 text-sm font-medium text-gray-300">
-          <li className="text-black font-bold">1. start.</li>
-          <li className="hover:text-black cursor-pointer transition-colors">2. work.</li>
-          <li className="hover:text-black cursor-pointer transition-colors">3. about.</li>
-          <li className="hover:text-black cursor-pointer transition-colors">4. contact.</li>
-        </ul>
-      </nav>
+    <section id="hero" className="relative flex min-h-screen w-full flex-col items-center justify-center bg-white px-6 md:flex-row md:justify-between md:px-20 overflow-hidden">      
 
       <motion.div 
         initial={{ opacity: 0, x: -50 }}
@@ -52,10 +43,10 @@ export default function hero() {
         <motion.div
           animate={{ y: [0, -20, 0] }}
           transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-          className="relative w-80 h-80 md:w-[500px] md:h-[500px]"
+          className="relative w-80 h-80 md:w-125 md:h-125"
         >
            {/* Custom SVG Line Art Skeleton */}
-           <svg viewBox="0 0 200 200" className="w-full h-full stroke-gray-400 stroke-[3] fill-none stroke-linecap-round stroke-linejoin-round">
+           <svg viewBox="0 0 200 200" className="w-full h-full stroke-gray-400 stroke-3 fill-none stroke-linecap-round stroke-linejoin-round">
               
               {/* Skull */}
               <path d="M60 90 Q 60 40 100 40 Q 140 40 140 90 Q 140 130 100 130 Q 60 130 60 90 Z" className="stroke-gray-500" />
