@@ -1,16 +1,16 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, Twitter, Send, Copy, Check } from "lucide-react";
+import { Mail, Github, Linkedin, Twitter, Copy, Check, ArrowUpRight } from "lucide-react";
 
 const socials = [
-  { icon: <Github size={20} />, label: "GitHub", href: "https://github.com" },
-  { icon: <Linkedin size={20} />, label: "LinkedIn", href: "https://linkedin.com" },
-  { icon: <Twitter size={20} />, label: "Twitter", href: "https://twitter.com" },
+  { icon: <Github size={20} />, label: "GitHub", href: "https://github.com/nidarath" },
+  { icon: <Linkedin size={20} />, label: "LinkedIn", href: "https://www.linkedin.com/in/nidarath/" },
 ];
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+
   const copyEmail = () => {
     navigator.clipboard.writeText("nidarzx@gmail.com");
     setCopied(true);
@@ -18,9 +18,9 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="min-h-screen w-full bg-white py-20 px-6 md:px-20 overflow-hidden relative border-t-2 border-gray-100">
+    <section id="contact" className="min-h-[89vh] w-full bg-white py-20 px-6 md:px-20 overflow-hidden relative border-t-2 border-gray-100">
       
-      {/* dot background */}
+      {/* background */}
       <div className="absolute inset-0 opacity-[0.12]" 
            style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
       />
@@ -42,111 +42,91 @@ export default function Contact() {
           </h3>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
           
-          {/* info + socials */}
+          {/* description */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="space-y-8"
           >
+            <p className="text-lg text-gray-600 leading-relaxed font-medium">
+              I&apos;m currently looking for new opportunities. Whether you have a question, 
+              a project idea, or just want to say hi, my inbox is always open!
+            </p>
+
+            {/* socials */}
             <div>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                I&apos;m currently looking for new opportunities. Whether you have a question, 
-                a project idea, or just want to say hi, I&apos;ll try my best to get back to you!
-              </p>
-            </div>
-
-            {/* email copy box */}
-            <div 
-              onClick={copyEmail}
-              className="group cursor-pointer border-2 bg-white border-black rounded-xl p-4 flex items-center justify-between hover:bg-gray-100 transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-black text-white rounded-lg">
-                  <Mail size={20} />
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Mail me at</p>
-                  <p className="text-lg font-bold">nidarzx@gmail.com</p>
-                </div>
+              <h4 className="font-bold text-black mb-4 flex items-center gap-2">
+                <span className="w-8 h-[2px] bg-rose-500 inline-block"></span> find me online
+              </h4>
+              <div className="flex flex-wrap gap-3">
+                {socials.map((social, i) => (
+                  <a 
+                    key={i}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 bg-white px-5 py-3 border-2 border-gray-100 text-gray-600 font-bold rounded-xl hover:border-black hover:text-black hover:scale-105 transition-all"
+                  >
+                    {social.icon}
+                    {social.label}
+                  </a>
+                ))}
               </div>
-              <div className="text-gray-400 group-hover:text-rose-500">
-                {copied ? <Check size={20} /> : <Copy size={20} />}
-              </div>
-            </div>
-
-            {/* social links */}
-            <div className="flex flex-wrap gap-4">
-              {socials.map((social, i) => (
-                <a 
-                  key={i}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-white px-5 py-3 border-2 border-gray-100 text-gray-600 font-bold rounded-xl hover:border-black hover:text-black hover:scale-105 transition-all"
-                >
-                  {social.icon}
-                  {social.label}
-                </a>
-              ))}
             </div>
           </motion.div>
 
-          {/* the form */}
+          {/* right column */}
           <motion.div 
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="bg-white p-8 rounded-2xl border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]"
+            className="flex flex-col justify-center gap-4"
           >
-            <form className="space-y-6">
+            
+            {/* copy button */}
+            <motion.div
+              onClick={copyEmail}
+              whileHover={{ y: -5, boxShadow: "8px 8px 0px 0px #FDA4AF" }} // shadow on hover
+              whileTap={{ scale: 0.98, boxShadow: "0px 0px 0px 0px #FDA4AF" }}
+              className="group relative bg-white border-2 border-black rounded-3xl p-8 cursor-pointer shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] transition-all flex flex-col gap-6"
+            >
+              <div className="flex items-center justify-between">
+                <div className={`p-4 rounded-full border-2 border-black transition-colors ${copied ? 'bg-green-100' : 'bg-rose-100'}`}>
+                    {copied ? <Check size={32} className="text-black" /> : <Mail size={32} className="text-black" />}
+                </div>
+                
+                <span className={`text-sm font-bold uppercase tracking-wider border-2 border-black px-3 py-1 rounded-full ${copied ? 'bg-green-100 text-black' : 'bg-gray-100 text-gray-500'}`}>
+                  {copied ? "Copied!" : "Click to Copy"}
+                </span>
+              </div>
               
-              {/* name imput */}
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-bold ml-1">Name</label>
-                <input 
-                  type="text" 
-                  id="name"
-                  placeholder="Your name"
-                  className="w-full bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-black focus:bg-white transition-all placeholder:text-gray-300"
-                />
+              <div>
+                <p className="text-gray-500 font-bold text-sm uppercase tracking-wide mb-1">Drop me a message at</p>
+                <h3 className="text-2xl md:text-3xl font-black text-black group-hover:text-rose-500 transition-colors break-all">
+                  nidarzx@gmail.com
+                </h3>
               </div>
 
-              {/* email input */}
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-bold ml-1">Email</label>
-                <input 
-                  type="email" 
-                  id="email"
-                  placeholder="name@example.com"
-                  className="w-full bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-black focus:bg-white transition-all placeholder:text-gray-300"
-                />
+              <div className="flex items-center gap-2 text-gray-400 group-hover:text-black transition-colors font-medium text-sm">
+                <Copy size={16} /> 
+                {copied ? "Address copied to clipboard" : "Copy email address"}
               </div>
+            </motion.div>
 
-              {/* message input */}
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-bold ml-1">Message</label>
-                <textarea 
-                  id="message"
-                  rows={4}
-                  placeholder="Say Hello!"
-                  className="w-full bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-black focus:bg-white transition-all resize-none placeholder:text-gray-300"
-                />
-              </div>
+            {/* email me now*/}
+            <div className="flex justify-end">
+                <a 
+                  href="mailto:nidarzx@gmail.com"
+                  className="text-sm font-bold text-gray-400 hover:text-black flex items-center gap-1 transition-colors"
+                >
+                  or open mail app <ArrowUpRight size={14} />
+                </a>
+            </div>
 
-              {/* submit */}
-              <motion.button
-                whileHover={{ scale: 1.02, boxShadow: "4px 4px 0px 0px #FDA4AF" }} 
-                whileTap={{ scale: 0.98, boxShadow: "0px 0px 0px 0px #FDA4AF" }}
-                className="w-full bg-black text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 shadow-[4px_4px_0px_0px_#000] border-2 border-black transition-all"
-              >
-                Send Message <Send size={18} />
-              </motion.button>
-
-            </form>
           </motion.div>
 
         </div>
