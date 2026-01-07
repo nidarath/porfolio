@@ -8,7 +8,7 @@ export default function Footer() {
           © {new Date().getFullYear()} Nida.
         </p>
         <p className="text-xs text-gray-300 font-medium">
-          Built with Next.js, Tailwind & a lot of coffee.
+          Built with Next.js, Tailwind & a lot of matcha.
         </p>
       </div>
     </footer>

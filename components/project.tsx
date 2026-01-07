@@ -39,26 +39,30 @@ const projects = [
 
 export default function Project() {
   return (
-    <section id="work" className="min-h-screen py-20 bg-gray-50 flex flex-col items-center">
+    <section id="work" className="min-h-screen py-20 bg-white flex flex-col items-center relative overflow-hidden ">
       
-      {/* TITLE */}
+      {/* background */}
+      <div className="absolute inset-0 opacity-[0.12]" 
+           style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
+      />
+
+      {/* header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="text-center mb-16 px-6"
+        className="text-center mb-12 px-6 relative z-10" 
       >
-        <h2 className="text-4xl md:text-5xl font-black text-black tracking-tight">
-          Featured Projects
+        <h2 className="text-4xl font-light text-gray-200 md:text-5xl select-none">
+          selected.
         </h2>
-        <p className="mt-4 text-gray-500 max-w-lg mx-auto">
-          some of my recent projects. 
-        </p>
+        <h3 className="text-3xl md:text-4xl font-black text-black tracking-tight -mt-4 md:-mt-6">
+          featured<span className="text-rose-500">.</span>projects
+        </h3>
       </motion.div>
 
-      {/* PROJECT GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-6 max-w-6xl w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-6 max-w-4xl w-full relative z-10">
         {projects.map((project, index) => (
           <motion.div
             key={index}
@@ -66,50 +70,47 @@ export default function Project() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            whileHover={{ y: -10 }} 
-            className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100"
+            whileHover={{ y: -5, boxShadow: "8px 8px 0px 0px #FDA4AF" }} 
+            className="group bg-white rounded-2xl overflow-hidden border-2 border-black transition-all duration-300 flex flex-col"
           >
             {/* IMAGE */}
-            {/* placeholder */}
-            <div className={`h-64 w-full ${project.imageColor} flex items-center justify-center relative overflow-hidden`}>
-              <Code2 className="text-black/10 w-32 h-32 group-hover:scale-110 transition-transform duration-500" />
-              
-              {/* overlay*/}
+            <div className={`h-48 w-full ${project.imageColor} flex items-center justify-center relative overflow-hidden border-b-2 border-black`}>
+              <Code2 className="text-black/10 w-24 h-24 group-hover:scale-110 transition-transform duration-500" />
               <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
 
             {/* content */}
-            <div className="p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-rose-500 transition-colors">
+            <div className="p-6 flex flex-col grow">
+              <h3 className="text-xl font-black text-black mb-2 group-hover:text-rose-500 transition-colors">
                 {project.title}
               </h3>
               
-              <p className="text-gray-500 mb-6 leading-relaxed">
+              <p className="text-gray-500 mb-4 text-sm leading-relaxed font-medium grow">
                 {project.description}
               </p>
 
               {/* tech stack */}
-              <div className="flex flex-wrap gap-2 mb-8">
+              <div className="flex flex-wrap gap-2 mb-6">
                 {project.tech.map((tech) => (
-                  <span key={tech} className="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full">
+                  <span key={tech} className="px-2 py-1 bg-white border-2 border-gray-100 text-gray-600 text-[10px] font-bold rounded-md group-hover:border-black transition-colors uppercase tracking-wider">
                     {tech}
                   </span>
                 ))}
               </div>
 
               {/* buttons*/}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <a 
                   href={project.liveLink}
-                  className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-full text-sm font-bold hover:bg-gray-800 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg text-xs font-bold border-2 border-black hover:bg-gray-800 transition-colors"
                 >
-                  <ExternalLink size={16} /> live Demo
+                  <ExternalLink size={14} /> Live Demo
                 </a>
                 <a 
                   href={project.repoLink}
-                  className="flex items-center gap-2 px-4 py-2 border-2 border-gray-200 text-gray-700 rounded-full text-sm font-bold hover:border-black hover:text-black transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg text-xs font-bold border-2 border-gray-200 hover:border-black transition-colors"
                 >
-                  <Github size={16} /> code
+                  <Github size={14} /> Code
                 </a>
               </div>
             </div>

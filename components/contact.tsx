@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, Twitter, Copy, Check, ArrowUpRight } from "lucide-react";
+import { Mail, Github, Linkedin, Copy, Check, ArrowUpRight } from "lucide-react";
 
 const socials = [
   { icon: <Github size={20} />, label: "GitHub", href: "https://github.com/nidarath" },
@@ -18,7 +18,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="min-h-[89vh] w-full bg-white py-20 px-6 md:px-20 overflow-hidden relative border-t-2 border-gray-100">
+    <section id="contact" className="min-h-[89vh] w-full bg-white py-20 px-6 md:px-20 overflow-hidden relative">
       
       {/* background */}
       <div className="absolute inset-0 opacity-[0.12]" 
@@ -59,7 +59,7 @@ export default function Contact() {
             {/* socials */}
             <div>
               <h4 className="font-bold text-black mb-4 flex items-center gap-2">
-                <span className="w-8 h-[2px] bg-rose-500 inline-block"></span> find me online
+                <span className="w-8 h-0.5 bg-rose-500 inline-block"></span> find me online
               </h4>
               <div className="flex flex-wrap gap-3">
                 {socials.map((social, i) => (
