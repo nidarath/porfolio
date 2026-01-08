@@ -4,6 +4,22 @@ import { motion } from "framer-motion";
 export default function Hero() {
   return (
     <section id="hero" className="relative flex min-h-screen w-full flex-col items-center justify-center bg-white px-6 md:flex-row md:justify-between md:px-20 overflow-hidden">      
+<motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className="absolute top-8 right-6 md:top-12 md:right-20 flex gap-6 text-lg font-bold text-gray-300 lowercase z-20"
+      >
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#79ABBD] transition-colors">
+          linkedin
+        </a>
+        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#79ABBD] transition-colors">
+          resume
+        </a>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#79ABBD] transition-colors">
+          github
+        </a>
+      </motion.div>
 
       <motion.div 
         initial={{ opacity: 0, x: -50 }}
@@ -18,7 +34,7 @@ export default function Hero() {
         </h2>
         
         <h1 className="mt-2 text-6xl font-black tracking-tighter text-black md:text-8xl">
-          nida<span className="text-rose-500">.</span>
+          nida<span className="text-[#79ABBD]">.</span>
         </h1>
 
         <div className="mt-8 space-y-4 text-sm font-medium text-gray-500 md:text-base max-w-xs">
