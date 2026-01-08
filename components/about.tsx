@@ -144,7 +144,7 @@ export default function About() {
             
             {/* tech skills */}
             <div>
-              <h4 className="text-xl font-bold mb-6 flex items-center gap-2">
+              <h4 className="text-xl text-[#e0e0e0] font-bold mb-6 flex items-center gap-2">
                 <Cpu size={20} className="text-black" /> skills.
               </h4>
               <div className="flex flex-wrap gap-2">
@@ -162,7 +162,7 @@ export default function About() {
 
             {/* hobbies */}
             <div>
-              <h4 className="text-xl font-bold mb-6 flex items-center gap-2">
+              <h4 className="text-xl text-[#e0e0e0] font-bold mb-6 flex items-center gap-2">
                 <Heart size={20} className="text-black" /> hobbies.
               </h4>
               <div className="grid grid-cols-2 gap-3">

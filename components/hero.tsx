@@ -43,7 +43,7 @@ export default function Hero() {
             problem solver, and a digital creator.
           </p>
           <p>
-            I love building clean code and minimal interfaces, with the occasional 
+            I love building fun projects and minimal interfaces, with the occasional 
             habit of drinking too much caffiene.
           </p>
         </div>

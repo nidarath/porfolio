@@ -6,7 +6,7 @@ const projects = [
   {
     title: "MedGuide",
     description: "An mobile app helping users track medication schedules and interactions based on symptoms.",
-    tech: ["React Native", "Express.js", "MongoDB"],
+    tech: ["React Native", "Express.js", "MongoDB", "Node.js"],
     image: "medguide.png",
     liveLink: "https://youtu.be/vfM3Prxhggk",
     repoLink: "https://github.com/Nsujatno/MedGuide",
@@ -14,15 +14,15 @@ const projects = [
   {
     title: "Kids U Database",
     description: "Custom full-stack donor management system built for a non-profit to optimize data tracking.",
-    tech: ["Next.js", "PostgreSQL", "Prisma"],
+    tech: ["Next.js", "PostgreSQL", "Prisma", "Docker", "React"],
     image: "kidsu.png",
-    liveLink: "#",
+    liveLink: "https://youtu.be/xM_jzEvte0I",
     repoLink: "https://github.com/UTDallasEPICS/Kids-U-Donor-Volunteer-Database",
   },
   {
     title: "KanbanSync",
     description: "HackUTD project: An AI-powered workflow assistant used in datacenter operations, enabling natural language task creation and validation.",
-    tech: ["React", "FastAPI", "OpenAI API"],
+    tech: ["React", "FastAPI", "OpenAI API", "Python", "Clerk", "Next.js"],
     image: "hackutd25.png",
     liveLink: "https://www.youtube.com/watch?v=R-fUu01G1gE",
     repoLink: "https://github.com/Nsujatno/hackutd25",
