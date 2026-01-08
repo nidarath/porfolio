@@ -47,7 +47,7 @@ export default function Navbar() {
       transition={{ duration: 0.3, delay: 1, ease: "easeOut" }}
       className="fixed top-8 left-8 z-50 hidden md:flex flex-col gap-3" 
     >
-      <div className="absolute left-[7px] top-2 bottom-2 w-[1px] bg-gray-100 -z-10" />
+      <div className="absolute left-1.75 top-2 bottom-2 w-px bg-gray-100 -z-10" />
 
       <ul className="flex flex-col gap-3"> 
         {navItems.map((item, index) => {
@@ -59,7 +59,7 @@ export default function Navbar() {
               onClick={() => scrollTo(item.id)}
               className="relative flex items-center gap-3 cursor-pointer group"
             >
-              <div className="relative w-4 h-4 flex items-center justify-center flex-shrink-0">
+              <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
                 
                 <div 
                     className={`w-2 h-2 rounded-full border-[1.5px] transition-all duration-300 ${
