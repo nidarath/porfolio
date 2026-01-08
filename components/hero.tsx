@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 export default function Hero() {
   return (
     <section id="hero" className="relative flex min-h-screen w-full flex-col items-center justify-center bg-white px-6 md:flex-row md:justify-between md:px-20 overflow-hidden">      
-<motion.div 
+      <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
@@ -44,60 +44,66 @@ export default function Hero() {
           </p>
           <p>
             I love building fun projects and minimal interfaces, with the occasional 
-            habit of drinking too much caffiene.
+            habit of drinking too much caffeine.
           </p>
         </div>
       </motion.div>
-
+      {/* cup */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative mt-12 md:mt-0 md:w-1/2 flex justify-center"
+        className="relative mt-12 md:mt-0 md:w-1/2 flex justify-center md:justify-end"
       >
-        {/* Floating Animation Wrapper */}
         <motion.div
-          animate={{ y: [0, -20, 0] }}
+          animate={{ y: [0, -15, 0] }}
           transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-          className="relative w-80 h-80 md:w-125 md:h-125"
+          className="relative w-75 h-75 md:w-112.5 md:h-112.5"
         >
-           {/* Custom SVG Line Art Skeleton */}
-           <svg viewBox="0 0 200 200" className="w-full h-full stroke-gray-400 stroke-3 fill-none stroke-linecap-round stroke-linejoin-round">
+          <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-xl">
               
-              {/* Skull */}
-              <path d="M60 90 Q 60 40 100 40 Q 140 40 140 90 Q 140 130 100 130 Q 60 130 60 90 Z" className="stroke-gray-500" />
+              {/* Steam Animation */}
+              <motion.path 
+                d="M80 40 Q 90 20 100 40 T 120 40" 
+                stroke="#79ABBD" strokeWidth="4" fill="none" strokeLinecap="round"
+                animate={{ y: [0, -10, 0], opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 3 }}
+              />
+              <motion.path 
+                d="M100 30 Q 110 10 120 30 T 140 30" 
+                stroke="#79ABBD" strokeWidth="4" fill="none" strokeLinecap="round"
+                animate={{ y: [0, -15, 0], opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 3, delay: 0.5 }}
+              />
+
+              {/* Cup Body */}
+              <path 
+                d="M50 70 L 55 140 C 55 165, 75 180, 100 180 C 125 180, 145 165, 145 140 L 150 70 Z" 
+                fill="white" stroke="black" strokeWidth="3" strokeLinejoin="round"
+              />
               
-              {/* Eyes (Cute & Large) */}
-              <circle cx="85" cy="85" r="8" className="fill-black stroke-none" />
-              <circle cx="115" cy="85" r="8" className="fill-black stroke-none" />
+              {/* Cup Handle */}
+              <path 
+                d="M150 85 C 175 85, 175 130, 148 130" 
+                fill="white" stroke="black" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
+              />
+
+              {/* Face */}
+              <circle cx="85" cy="120" r="6" fill="black" />
+              <circle cx="115" cy="120" r="6" fill="black" />
               
-              {/* Sparkles in eyes */}
-              <circle cx="88" cy="82" r="2" className="fill-white stroke-none" />
-              <circle cx="118" cy="82" r="2" className="fill-white stroke-none" />
+              {/* Cheeks */}
+              <circle cx="75" cy="132" r="5" fill="#79ABBD" opacity="0.4" />
+              <circle cx="125" cy="132" r="5" fill="#79ABBD" opacity="0.4" />
 
-              {/* Nose */}
-              <path d="M100 95 L 98 100 L 102 100 Z" className="fill-black stroke-none" />
-
-              {/* Mouth (Stitched smile) */}
-              <path d="M85 110 Q 100 115 115 110" />
-              <path d="M90 108 L 90 114" />
-              <path d="M100 110 L 100 116" />
-              <path d="M110 108 L 110 114" />
-
-              {/* Body / Ribs */}
-              <path d="M100 130 L 100 160" />
-              <path d="M85 140 Q 100 145 115 140" />
-              <path d="M88 150 Q 100 155 112 150" />
-              
-              {/* Arms (Waving) */}
-              <path d="M115 140 Q 140 130 150 100" /> 
-              <path d="M145 95 L 150 100 L 158 98" /> 
-              <path d="M85 140 Q 60 160 60 180" /> 
-
-
-           </svg>
+              {/* Smile */}
+              <path 
+                d="M95 125 Q 100 130 105 125" 
+                fill="none" stroke="black" strokeWidth="3" strokeLinecap="round" 
+              />
+          </svg>
         </motion.div>
       </motion.div>
-    </section>
+  </section>
   );
 }
