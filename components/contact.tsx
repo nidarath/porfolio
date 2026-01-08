@@ -38,7 +38,7 @@ export default function Contact() {
             say hello.
           </h2>
           <h3 className="text-4xl font-black tracking-tighter text-black md:text-5xl -mt-4 md:-mt-8 ml-2">
-            contact<span className="text-rose-500">.</span>me
+            contact<span className="text-[#79ABBD]">.</span>me
           </h3>
         </motion.div>
 
@@ -59,7 +59,7 @@ export default function Contact() {
             {/* socials */}
             <div>
               <h4 className="font-bold text-black mb-4 flex items-center gap-2">
-                <span className="w-8 h-0.5 bg-rose-500 inline-block"></span> find me online
+                <span className="w-8 h-0.5 bg-[#79ABBD] inline-block"></span> find me online
               </h4>
               <div className="flex flex-wrap gap-3">
                 {socials.map((social, i) => (
@@ -90,12 +90,12 @@ export default function Contact() {
             {/* copy button */}
             <motion.div
               onClick={copyEmail}
-              whileHover={{ y: -5, boxShadow: "8px 8px 0px 0px #FDA4AF" }} // shadow on hover
-              whileTap={{ scale: 0.98, boxShadow: "0px 0px 0px 0px #FDA4AF" }}
+              whileHover={{ y: -5, boxShadow: "8px 8px 0px 0px #79ABBD" }} 
+              whileTap={{ scale: 0.98, boxShadow: "0px 0px 0px 0px #79ABBD" }}
               className="group relative bg-white border-2 border-black rounded-3xl p-8 cursor-pointer shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] transition-all flex flex-col gap-6"
             >
               <div className="flex items-center justify-between">
-                <div className={`p-4 rounded-full border-2 border-black transition-colors ${copied ? 'bg-green-100' : 'bg-rose-100'}`}>
+                <div className={`p-4 rounded-full border-2 border-black transition-colors ${copied ? 'bg-green-100' : 'bg-[#79ABBD]'}`}>
                     {copied ? <Check size={32} className="text-black" /> : <Mail size={32} className="text-black" />}
                 </div>
                 
@@ -106,7 +106,7 @@ export default function Contact() {
               
               <div>
                 <p className="text-gray-500 font-bold text-sm uppercase tracking-wide mb-1">Drop me a message at</p>
-                <h3 className="text-2xl md:text-3xl font-black text-black group-hover:text-rose-500 transition-colors break-all">
+                <h3 className="text-2xl md:text-3xl font-black text-black group-hover:text-[#79ABBD] transition-colors break-all">
                   nidarzx@gmail.com
                 </h3>
               </div>
