@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useState } from "react"; 
 
 export default function Hero() {
   return (
@@ -8,24 +9,47 @@ export default function Hero() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className="absolute top-8 right-6 md:top-12 md:right-20 flex gap-6 text-lg font-bold text-gray-300 lowercase z-20"
+        className="hidden md:flex absolute top-8 right-12 gap-6 text-lg font-bold text-gray-300 lowercase z-20"
       >
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#79ABBD] transition-colors">
+        <a href="https://www.linkedin.com/in/nidarath/" target="_blank" rel="noopener noreferrer" className="hover:text-[#79ABBD] transition-colors">
           linkedin
         </a>
         <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#79ABBD] transition-colors">
           resume
         </a>
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#79ABBD] transition-colors">
+        <a href="https://github.com/nidarath" target="_blank" rel="noopener noreferrer" className="hover:text-[#79ABBD] transition-colors">
           github
         </a>
+      </motion.div>
+  {/* mobile nav bar*/}
+      <motion.div 
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className="flex md:hidden absolute top-8 left-6 flex-col items-start gap-2 text-lg font-bold lowercase z-30"
+      >
+        {[
+          { id: "work", label: "work." },
+          { id: "about", label: "about." },
+          { id: "contact", label: "contact." }
+        ].map((item) => (
+          <motion.a 
+            key={item.id}
+            href={`#${item.id}`}
+            className="text-gray-300"
+            whileTap={{ scale: 0.9, color: "#79ABBD" }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            {item.label}
+          </motion.a>
+        ))}
       </motion.div>
 
       <motion.div 
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="z-10 mt-20 md:mt-0 max-w-lg text-left"
+        className="z-10 mt-40 md:mt-0 max-w-lg text-left"
       >
         <h2 className="text-4xl font-light text-gray-200 md:text-6xl">
           hello,
@@ -103,6 +127,30 @@ export default function Hero() {
               />
           </svg>
         </motion.div>
+      </motion.div>
+      {/* mobile social links */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="flex md:hidden gap-6 mt-2 mb-8 text-lg font-bold lowercase"
+      >
+        {[
+          { name: "linkedin", url: "https://linkedin.com/in/nidarath" },
+          { name: "resume", url: "/resume.pdf" },
+          { name: "github", url: "https://github.com/nidarath" }
+        ].map((social) => (
+          <motion.a 
+            key={social.name}
+            href={social.url}
+            target={social.name === "resume" ? "_blank" : "_self"}
+            className="text-gray-300"
+            whileTap={{ scale: 0.9, color: "#79ABBD" }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            {social.name}
+          </motion.a>
+        ))}
       </motion.div>
   </section>
   );

@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "nida.dev - my portfolio",
   description: "welcome to my portfolio :)",
+  icons: {
+    icon: '/icon.png',
+  },
 };
 
 export default function RootLayout({
