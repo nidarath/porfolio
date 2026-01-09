@@ -15,7 +15,7 @@ const projects = [
     title: "Kids U Database",
     description: "Custom full-stack donor management system built for a non-profit to optimize data tracking.",
     tech: ["Next.js", "PostgreSQL", "Prisma", "Docker", "React"],
-    image: "kidsu.png",
+    image: "kidsU.png",
     liveLink: "https://youtu.be/xM_jzEvte0I",
     repoLink: "https://github.com/UTDallasEPICS/Kids-U-Donor-Volunteer-Database",
   },

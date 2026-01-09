@@ -44,7 +44,7 @@ const hobbies = [
 
 export default function About() {
   return (
-    <section id="about" className="min-h-screen w-full bg-white py-20 px-6 md:px-20 overflow-hidden relative">
+    <section id="about" className="min-h-screen w-full bg-white px-6 md:px-20 overflow-hidden relative">
       <div className="absolute inset-0 opacity-[0.12]" 
         style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
       />
