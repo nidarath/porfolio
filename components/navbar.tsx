@@ -71,7 +71,7 @@ export default function Navbar() {
                   <motion.div
                     layoutId="active-cat"
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="absolute inset-0 flex items-center justify-center bg-white"
+                    className="absolute inset-0 flex items-center justify-center bg-transparent"
                   >
                       <Cat size={16} className="text-[#79ABBD] fill-[#ffffff]" />
                   </motion.div>
