@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nida | Fullstack Developer Portfolio
 
-## Getting Started
+A minimal, responsive portfolio website built to showcase my projects, skills, and experience. Designed with a focus on clean aesthetics, smooth animations, and a cohesive blue color story.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js_14-0070F3?style=flat&logo=nextdotjs&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-0EA5E9?style=flat&logo=tailwindcss&logoColor=white) ![Framer Motion](https://img.shields.io/badge/Framer_Motion-1E40AF?style=flat&logo=framer&logoColor=white)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Responsive Design:** A unique navigation system 
+- **Animations:** Smooth entry animations and interactive elements powered by **Framer Motion**.
+- **Custom Graphics:** Features animated, floating SVG illustrations (like the coffee cup/seal).
+- **Modern Stack:** Built with the latest **Next.js 14 App Router** and **TypeScript**.
+- **Fast Performance:** Optimized with static generation and deployed on **Vercel**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## (⌐■_■) Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework:** [Next.js](https://nextjs.org/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Animation:** [Framer Motion](https://www.framer.com/motion/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Deployment:** [Vercel](https://vercel.com/)
 
-## Learn More
+## ʕ•ᴥ•ʔ Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+To run this project locally, follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/nidarath/portfolio.git](https://github.com/nidarath/portfolio.git)
+   cd portfolio
+2. **Install dependencies:**
+   ```bash
+    npm install
+    # or
+    yarn install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Run the development server:
+    ```bash
+    npm run dev
+    Open your browser: Navigate to http://localhost:3000 to see the site live.
 
-## Deploy on Vercel
+## (📂_📂) Project Structure
+  
+    ```bash
+    ├── public/          # Static assets (images, PDFs, SVGs)
+    ├── app/             # Next.js App Router pages (layout.tsx, page.tsx)
+    ├── components/  # Reusable components (Hero.tsx, Navbar.tsx, Projects.tsx)
+    │   └── ...
+    ├── tailwind.config  # Tailwind settings
+    └── README.md        # You are here!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## (づ｡◕‿‿◕｡)づ Deployment
+This project is optimized for deployment on Vercel.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Push your code to a GitHub repository.
+Sign up at Vercel.
+Import your repository and click Deploy.
+
+(✿◠‿◠) Contact
+LinkedIn: linkedin.com/in/nidarath
+
+GitHub: github.com/nidarath
+
+Built with ♡ and Next.js by Nida.
