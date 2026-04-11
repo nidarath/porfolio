@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { Github, ExternalLink} from "lucide-react";
+import { Github, ExternalLink, ArrowRight } from "lucide-react";
 
 const projects = [
   {
@@ -37,20 +37,39 @@ export default function Project() {
            style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
       />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-12 px-6 relative z-10" 
-      >
-        <h2 className="text-4xl font-light text-gray-200 md:text-5xl select-none">
-          selected.
-        </h2>
-        <h3 className="text-3xl md:text-4xl font-black text-black tracking-tight -mt-4 md:-mt-6">
-          featured<span className="text-[#79ABBD]">.</span>projects
-        </h3>
-      </motion.div>
+      <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl px-6 mb-12 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center md:text-left mb-6 md:mb-0" 
+        >
+          <h2 className="text-4xl font-light text-gray-200 md:text-5xl select-none">
+            selected.
+          </h2>
+          <h3 className="text-3xl md:text-4xl font-black text-black tracking-tight -mt-4 md:-mt-6">
+            featured<span className="text-[#79ABBD]">.</span>projects
+          </h3>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <motion.a 
+            href="/projects"
+            whileHover={{ y: -4, boxShadow: "6px 6px 0px 0px #79ABBD" }}
+            whileTap={{ y: 0, boxShadow: "0px 0px 0px 0px #79ABBD" }}
+            className="group flex items-center gap-3 px-6 py-3 bg-white text-black rounded-xl text-sm font-black border-2 border-black transition-all duration-300"
+          >
+            view all projects
+            <ArrowRight size={18} className="group-hover:translate-x-1 text-black group-hover:text-[#79ABBD] transition-all duration-300" />
+          </motion.a>
+        </motion.div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 max-w-6xl w-full relative z-10">
         {projects.map((project, index) => (
