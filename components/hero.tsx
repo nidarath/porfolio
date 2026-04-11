@@ -3,6 +3,24 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 export default function Hero() {
+  const [particles, setParticles] = useState<{ id: number; x: number; size: number; rotation: number; delay: number }[]>([]);
+
+  const spawnParticles = () => {
+    const newParticles = Array.from({ length: 8 }).map((_, i) => ({
+      id: Date.now() + i + Math.random(),
+      x: (Math.random() - 0.5) * 160, 
+      size: Math.random() * 12 + 12,  
+      rotation: Math.random() * 360,
+      delay: Math.random() * 0.1
+    }));
+
+    setParticles((prev) => [...prev, ...newParticles]);
+    
+    setTimeout(() => {
+      setParticles((prev) => prev.filter(p => !newParticles.some(np => np.id === p.id)));
+    }, 2000);
+  };
+
   return (
     <section id="hero" className="relative flex min-h-screen w-full flex-col items-center justify-center bg-white px-6 md:flex-row md:justify-between md:px-20 overflow-hidden">
       <motion.div
@@ -77,9 +95,28 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, -15, 0] }}
           transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-          className="relative w-75 h-75 md:w-112.5 md:h-112.5"
+          className="relative w-75 h-75 md:w-112.5 md:h-112.5 cursor-pointer group"
+          onClick={spawnParticles}
         >
-          <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-xl">
+          {particles.map(p => (
+             <motion.div
+                key={p.id}
+                initial={{ opacity: 1, y: 0, x: p.x, scale: 0, rotate: p.rotation }}
+                animate={{ opacity: 0, y: -250, scale: 1, rotate: p.rotation + (p.x > 0 ? 180 : -180) }}
+                transition={{ duration: 1.5, ease: "easeOut", delay: p.delay }}
+                className="absolute top-[35%] left-1/2 pointer-events-none z-10"
+                style={{ 
+                  marginLeft: `${-p.size/2}px`, 
+                  marginTop: `${-p.size/2}px`,
+                  width: p.size,
+                  height: p.size
+                }}
+             >
+                <div className="w-full h-full bg-[#87A887] rounded-tl-full rounded-br-full shadow-sm" />
+             </motion.div>
+          ))}
+          <motion.div whileTap={{ scale: 0.95 }} className="w-full h-full">
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-xl group-hover:drop-shadow-2xl transition-all duration-300">
 
             {/* Steam Animation */}
             <motion.path
@@ -121,6 +158,7 @@ export default function Hero() {
               fill="none" stroke="black" strokeWidth="3" strokeLinecap="round"
             />
           </svg>
+          </motion.div>
         </motion.div>
       </motion.div>
       {/* mobile social links */}
