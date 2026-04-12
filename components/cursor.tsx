@@ -1,55 +1,69 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useMotionValue } from "framer-motion";
 
-// heart-shaped clover leaf
 const LEAF = "M 0,0 C -6,0 -10,-5 -8,-10 C -6,-15 0,-16 0,-12 C 0,-16 6,-15 8,-10 C 10,-5 6,0 0,0 Z";
+
+const VEIN_COORDS_3 = [0, 120, 240].map((a) => {
+  const r = (a * Math.PI) / 180;
+  return { x2: 10 * Math.sin(r), y2: -10 * Math.cos(r) };
+});
+const VEIN_COORDS_4 = [0, 90, 180, 270].map((a) => {
+  const r = (a * Math.PI) / 180;
+  return { x2: 10 * Math.sin(r), y2: -10 * Math.cos(r) };
+});
 
 export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
-  // .67% chance of lucky 4-leaf — chosen once on mount
-  const isFourLeaf = useRef(Math.random() < .0067);
+  const isFourLeaf = useRef(Math.random() < 0.0067);
+  const hoverRef = useRef(false);
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
+
+  const isClickable = useCallback((el: HTMLElement): boolean => {
+    if (!el || el === document.body) return false;
+    const tag = el.tagName.toLowerCase();
+    if (tag === "a" || tag === "button") return true;
+    if (el.getAttribute("role") === "button") return true;
+    if (el.classList.contains("cursor-pointer")) return true;
+    return isClickable(el.parentElement as HTMLElement);
+  }, []);
 
   useEffect(() => {
     const mql = window.matchMedia("(pointer: fine)");
     if (!mql.matches) return;
     setIsVisible(true);
 
-    const isClickable = (el: HTMLElement): boolean => {
-      if (!el || el === document.body) return false;
-      const tag = el.tagName.toLowerCase();
-      if (tag === "a" || tag === "button") return true;
-      if (el.getAttribute("role") === "button") return true;
-      if (el.classList.contains("cursor-pointer")) return true;
-      return isClickable(el.parentElement as HTMLElement);
-    };
-
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
-      setIsHovering(isClickable(e.target as HTMLElement));
+
+      // Only trigger a React re-render when hover state actually changes
+      const clickable = isClickable(e.target as HTMLElement);
+      if (clickable !== hoverRef.current) {
+        hoverRef.current = clickable;
+        setIsHovering(clickable);
+      }
     };
 
-    window.addEventListener("mousemove", moveCursor);
+    // passive: true lets the browser skip calling preventDefault checks — smoother scroll
+    window.addEventListener("mousemove", moveCursor, { passive: true });
     return () => window.removeEventListener("mousemove", moveCursor);
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isClickable]);
 
   if (!isVisible) return null;
 
   const lucky = isFourLeaf.current;
-
-  const leafColor = lucky ? (isHovering ? "#79ABBD" : "#72c46e") : (isHovering ? "#79ABBD" : "#6db86a");
-  const leafColorDark = lucky ? (isHovering ? "#5a9bb5" : "#57a853") : (isHovering ? "#5a9bb5" : "#52a04f");
-  const stemColor = isHovering ? "#4a8aa0" : (lucky ? "#3a8a3a" : "#4a7a47");
-
-  // leaf angles: 4-leaf at 90° intervals, 3-leaf at 120°
   const angles = lucky ? [0, 90, 180, 270] : [0, 120, 240];
+  const veins = lucky ? VEIN_COORDS_4 : VEIN_COORDS_3;
+
+  const leafColor     = isHovering ? "#79ABBD" : (lucky ? "#72c46e" : "#6db86a");
+  const leafColorDark = isHovering ? "#5a9bb5" : (lucky ? "#57a853" : "#52a04f");
+  const stemColor     = isHovering ? "#4a8aa0" : (lucky ? "#3a8a3a" : "#4a7a47");
 
   return (
     <>
@@ -82,35 +96,31 @@ export default function CustomCursor() {
                   d={LEAF}
                   transform={`rotate(${angle})`}
                   animate={{ fill: i % 2 === 0 ? leafColor : leafColorDark }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.15 }}
                 />
               ))}
 
               <motion.circle cx="0" cy="0" r="3.5"
                 animate={{ fill: leafColor }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.15 }}
               />
 
-              {angles.map((angle) => {
-                const rad = angle * Math.PI / 180;
-                return (
-                  <line
-                    key={`vein-${angle}`}
-                    x1="0" y1="0"
-                    x2={10 * Math.sin(rad)}
-                    y2={-10 * Math.cos(rad)}
-                    stroke="rgba(255,255,255,0.3)"
-                    strokeWidth="0.85"
-                    strokeLinecap="round"
-                  />
-                );
-              })}
+              {veins.map(({ x2, y2 }, i) => (
+                <line
+                  key={i}
+                  x1="0" y1="0"
+                  x2={x2} y2={y2}
+                  stroke="rgba(255,255,255,0.3)"
+                  strokeWidth="0.85"
+                  strokeLinecap="round"
+                />
+              ))}
             </g>
 
             <motion.path
               d={lucky ? "M 19,35 Q 17,39 18,43" : "M 19,27 Q 17,35 18,43"}
               animate={{ stroke: stemColor }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.15 }}
               strokeWidth="2"
               strokeLinecap="round"
               fill="none"
