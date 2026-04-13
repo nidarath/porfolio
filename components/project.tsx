@@ -89,13 +89,13 @@ export default function Project() {
               {/* buttons */}
               <div className="flex items-center gap-3 mt-auto">
                 <a 
-                  href={project.liveLink}
+                  href={project.liveLink ?? undefined}
                   className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg text-xs font-bold border-2 border-black hover:bg-gray-800 transition-colors"
                 >
                   <ExternalLink size={14} /> Demo
                 </a>
                 <a 
-                  href={project.repoLink}
+                  href={project.repoLink ?? undefined}
                   className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg text-xs font-bold border-2 border-gray-200 hover:border-black transition-colors"
                 >
                   <Github size={14} /> Code
