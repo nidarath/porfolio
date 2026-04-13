@@ -42,7 +42,7 @@ export default function CustomCursor() {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
 
-      // Only trigger a React re-render when hover state actually changes
+      // only trigger a React re-render when hover state actually changes
       const clickable = isClickable(e.target as HTMLElement);
       if (clickable !== hoverRef.current) {
         hoverRef.current = clickable;

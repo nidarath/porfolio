@@ -1,33 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { Github, ExternalLink, ArrowRight } from "lucide-react";
-
-const projects = [
-  {
-    title: "MedGuide",
-    description: "An mobile app helping users track medication schedules and interactions based on symptoms.",
-    tech: ["React Native", "Express.js", "MongoDB", "Node.js"],
-    image: "medguide.png",
-    liveLink: "https://youtu.be/vfM3Prxhggk",
-    repoLink: "https://github.com/Nsujatno/MedGuide",
-  },
-  {
-    title: "Kids U Database",
-    description: "Custom full-stack donor management system built for a non-profit to optimize data tracking.",
-    tech: ["Next.js", "PostgreSQL", "Prisma", "Docker", "React"],
-    image: "kidsU.png",
-    liveLink: "https://youtu.be/xM_jzEvte0I",
-    repoLink: "https://github.com/UTDallasEPICS/Kids-U-Donor-Volunteer-Database",
-  },
-  {
-    title: "KanbanSync",
-    description: "HackUTD project: An AI-powered workflow assistant used in datacenter operations, enabling natural language task creation and validation.",
-    tech: ["React", "FastAPI", "OpenAI API", "Python", "Clerk", "Next.js"],
-    image: "hackutd25.png",
-    liveLink: "https://www.youtube.com/watch?v=R-fUu01G1gE",
-    repoLink: "https://github.com/Nsujatno/hackutd25",
-  },
-];
+import { featuredProjects } from "@/lib/projects";
 
 export default function Project() {
   return (
@@ -72,9 +46,9 @@ export default function Project() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 max-w-6xl w-full relative z-10">
-        {projects.map((project, index) => (
+        {featuredProjects.map((project, index) => (
           <motion.div
-            key={index}
+            key={project.title}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
