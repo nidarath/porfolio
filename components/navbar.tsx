@@ -79,8 +79,8 @@ export default function Navbar() {
               </div>
 
               <span
-                className={`text-sm font-medium transition-colors duration-300 ${
-                  isActive ? "text-[#79ABBD] font-bold" : "text-gray-400 group-hover:text-[#79ABBD]"
+                className={`text-sm font-light transition-colors duration-300 ${
+                  isActive ? "text-[#79ABBD] font-medium" : "text-gray-400 group-hover:text-[#79ABBD]"
                 }`}
               >
                 {index + 1}. {item.label}.
