@@ -25,8 +25,11 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 200;
   cursor: none !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.font-black { font-weight: 700 !important; }
+.font-bold  { font-weight: 600 !important; }
