@@ -1,33 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { Github, ExternalLink} from "lucide-react";
-
-const projects = [
-  {
-    title: "MedGuide",
-    description: "An mobile app helping users track medication schedules and interactions based on symptoms.",
-    tech: ["React Native", "Express.js", "MongoDB", "Node.js"],
-    image: "medguide.png",
-    liveLink: "https://youtu.be/vfM3Prxhggk",
-    repoLink: "https://github.com/Nsujatno/MedGuide",
-  },
-  {
-    title: "Kids U Database",
-    description: "Custom full-stack donor management system built for a non-profit to optimize data tracking.",
-    tech: ["Next.js", "PostgreSQL", "Prisma", "Docker", "React"],
-    image: "kidsU.png",
-    liveLink: "https://youtu.be/xM_jzEvte0I",
-    repoLink: "https://github.com/UTDallasEPICS/Kids-U-Donor-Volunteer-Database",
-  },
-  {
-    title: "KanbanSync",
-    description: "HackUTD project: An AI-powered workflow assistant used in datacenter operations, enabling natural language task creation and validation.",
-    tech: ["React", "FastAPI", "OpenAI API", "Python", "Clerk", "Next.js"],
-    image: "hackutd25.png",
-    liveLink: "https://www.youtube.com/watch?v=R-fUu01G1gE",
-    repoLink: "https://github.com/Nsujatno/hackutd25",
-  },
-];
+import { Github, ExternalLink, ArrowRight } from "lucide-react";
+import { featuredProjects } from "@/lib/projects";
 
 export default function Project() {
   return (
@@ -37,25 +11,44 @@ export default function Project() {
            style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
       />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-12 px-6 relative z-10" 
-      >
-        <h2 className="text-4xl font-light text-gray-200 md:text-5xl select-none">
-          selected.
-        </h2>
-        <h3 className="text-3xl md:text-4xl font-black text-black tracking-tight -mt-4 md:-mt-6">
-          featured<span className="text-[#79ABBD]">.</span>projects
-        </h3>
-      </motion.div>
+      <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl px-6 mb-12 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center md:text-left mb-6 md:mb-0" 
+        >
+          <h2 className="text-4xl font-light text-gray-200 md:text-5xl select-none">
+            selected.
+          </h2>
+          <h3 className="text-3xl md:text-4xl font-black text-black tracking-tight -mt-4 md:-mt-6">
+            featured<span className="text-[#79ABBD]">.</span>projects
+          </h3>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <motion.a 
+            href="/projects"
+            whileHover={{ y: -4, boxShadow: "6px 6px 0px 0px #79ABBD" }}
+            whileTap={{ y: 0, boxShadow: "0px 0px 0px 0px #79ABBD" }}
+            className="group flex items-center gap-3 px-6 py-3 bg-white text-black rounded-xl text-sm font-black border-2 border-black transition-all duration-300"
+          >
+            view all projects
+            <ArrowRight size={18} className="group-hover:translate-x-1 text-black group-hover:text-[#79ABBD] transition-all duration-300" />
+          </motion.a>
+        </motion.div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 max-w-6xl w-full relative z-10">
-        {projects.map((project, index) => (
+        {featuredProjects.map((project, index) => (
           <motion.div
-            key={index}
+            key={project.title}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -67,7 +60,7 @@ export default function Project() {
               
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src={project.image} 
+                src={project.image ?? undefined} 
                 alt={project.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
@@ -96,13 +89,13 @@ export default function Project() {
               {/* buttons */}
               <div className="flex items-center gap-3 mt-auto">
                 <a 
-                  href={project.liveLink}
+                  href={project.liveLink ?? undefined}
                   className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg text-xs font-bold border-2 border-black hover:bg-gray-800 transition-colors"
                 >
                   <ExternalLink size={14} /> Demo
                 </a>
                 <a 
-                  href={project.repoLink}
+                  href={project.repoLink ?? undefined}
                   className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg text-xs font-bold border-2 border-gray-200 hover:border-black transition-colors"
                 >
                   <Github size={14} /> Code

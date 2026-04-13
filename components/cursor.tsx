@@ -1,0 +1,166 @@
+"use client";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { motion, useMotionValue } from "framer-motion";
+
+const LEAF = "M 0,0 C -6,0 -10,-5 -8,-10 C -6,-15 0,-16 0,-12 C 0,-16 6,-15 8,-10 C 10,-5 6,0 0,0 Z";
+
+const VEIN_COORDS_3 = [0, 120, 240].map((a) => {
+  const r = (a * Math.PI) / 180;
+  return { x2: 10 * Math.sin(r), y2: -10 * Math.cos(r) };
+});
+const VEIN_COORDS_4 = [0, 90, 180, 270].map((a) => {
+  const r = (a * Math.PI) / 180;
+  return { x2: 10 * Math.sin(r), y2: -10 * Math.cos(r) };
+});
+
+export default function CustomCursor() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+
+  const isFourLeaf = useRef(Math.random() < 0.0067);
+  const hoverRef = useRef(false);
+
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  const isClickable = useCallback((el: HTMLElement): boolean => {
+    if (!el || el === document.body) return false;
+    const tag = el.tagName.toLowerCase();
+    if (tag === "a" || tag === "button") return true;
+    if (el.getAttribute("role") === "button") return true;
+    if (el.classList.contains("cursor-pointer")) return true;
+    return isClickable(el.parentElement as HTMLElement);
+  }, []);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(pointer: fine)");
+    if (!mql.matches) return;
+    setIsVisible(true);
+
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+
+      // only trigger a React re-render when hover state actually changes
+      const clickable = isClickable(e.target as HTMLElement);
+      if (clickable !== hoverRef.current) {
+        hoverRef.current = clickable;
+        setIsHovering(clickable);
+      }
+    };
+
+    // passive: true lets the browser skip calling preventDefault checks — smoother scroll
+    window.addEventListener("mousemove", moveCursor, { passive: true });
+    return () => window.removeEventListener("mousemove", moveCursor);
+  }, [cursorX, cursorY, isClickable]);
+
+  if (!isVisible) return null;
+
+  const lucky = isFourLeaf.current;
+  const angles = lucky ? [0, 90, 180, 270] : [0, 120, 240];
+  const veins = lucky ? VEIN_COORDS_4 : VEIN_COORDS_3;
+
+  const leafColor     = isHovering ? "#79ABBD" : (lucky ? "#72c46e" : "#6db86a");
+  const leafColorDark = isHovering ? "#5a9bb5" : (lucky ? "#57a853" : "#52a04f");
+  const stemColor     = isHovering ? "#4a8aa0" : (lucky ? "#3a8a3a" : "#4a7a47");
+
+  return (
+    <>
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
+        style={{ x: cursorX, y: cursorY, translateX: "-50%", translateY: "-55%", rotate: -25 }}
+      >
+        <motion.div
+          animate={{
+            scale: isHovering ? 1.25 : 1,
+            rotate: isHovering ? [0, -8, 8, -4, 4, 0] : 0,
+          }}
+          transition={
+            isHovering
+              ? { scale: { type: "spring", stiffness: 300, damping: 20 }, rotate: { duration: 0.5, ease: "easeInOut" } }
+              : { type: "spring", stiffness: 300, damping: 20 }
+          }
+        >
+          <svg width="38" height="44" viewBox="0 0 38 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="clover-shadow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="1.5" stdDeviation="2" floodColor="#00000022" />
+              </filter>
+            </defs>
+
+            <g transform="translate(19,19)" filter="url(#clover-shadow)">
+              {angles.map((angle, i) => (
+                <motion.path
+                  key={angle}
+                  d={LEAF}
+                  transform={`rotate(${angle})`}
+                  animate={{ fill: i % 2 === 0 ? leafColor : leafColorDark }}
+                  transition={{ duration: 0.15 }}
+                />
+              ))}
+
+              <motion.circle cx="0" cy="0" r="3.5"
+                animate={{ fill: leafColor }}
+                transition={{ duration: 0.15 }}
+              />
+
+              {veins.map(({ x2, y2 }, i) => (
+                <line
+                  key={i}
+                  x1="0" y1="0"
+                  x2={x2} y2={y2}
+                  stroke="rgba(255,255,255,0.3)"
+                  strokeWidth="0.85"
+                  strokeLinecap="round"
+                />
+              ))}
+            </g>
+
+            <motion.path
+              d={lucky ? "M 19,35 Q 17,39 18,43" : "M 19,27 Q 17,35 18,43"}
+              animate={{ stroke: stemColor }}
+              transition={{ duration: 0.15 }}
+              strokeWidth="2"
+              strokeLinecap="round"
+              fill="none"
+            />
+
+            {lucky && (
+              <motion.text
+                x="29" y="9" fontSize="7" fill="#ffe566"
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              >
+                ✦
+              </motion.text>
+            )}
+          </svg>
+        </motion.div>
+      </motion.div>
+
+      {lucky && !dismissed && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 1.2, ease: "easeOut" }}
+          className="fixed bottom-8 right-8 z-[9990] flex items-start gap-3 bg-white border-2 border-black rounded-xl px-4 py-3"
+        >
+          <span className="text-base mt-0.5">🍀</span>
+          <div>
+            <p className="text-xs font-black text-black lowercase">you&apos;re one of the lucky ones.</p>
+            <p className="text-[10px] font-medium text-gray-400 lowercase">your cursor is a four-leaf clover.</p>
+            <p className="text-[10px] font-medium text-gray-400 lowercase">only a 0.67% chance.</p>
+          </div>
+          <button
+            onClick={() => setDismissed(true)}
+            className="ml-1 text-gray-300 hover:text-black transition-colors text-sm leading-none mt-0.5 cursor-auto"
+          >
+            ✕
+          </button>
+        </motion.div>
+      )}
+    </>
+  );
+}

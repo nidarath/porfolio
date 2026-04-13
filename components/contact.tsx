@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Github, Linkedin, Copy, Check, ArrowUpRight } from "lucide-react";
 
@@ -10,11 +10,15 @@ const socials = [
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (copyTimer.current) clearTimeout(copyTimer.current); }, []);
 
   const copyEmail = () => {
     navigator.clipboard.writeText("nidarzx@gmail.com");
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (copyTimer.current) clearTimeout(copyTimer.current);
+    copyTimer.current = setTimeout(() => setCopied(false), 2000);
   };
 
   return (
