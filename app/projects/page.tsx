@@ -1,7 +1,8 @@
 "use client";
-import { motion } from "framer-motion";
-import { Github, ExternalLink, Lock, FolderOpen } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Github, ExternalLink, FolderOpen, Lock, ArrowUpDown } from "lucide-react";
 import { projects } from "@/lib/projects";
+import { useState, useMemo } from "react";
 
 const tagColors: Record<string, string> = {
     Mobile: "bg-purple-50 text-purple-600 border-purple-200",
@@ -11,35 +12,38 @@ const tagColors: Record<string, string> = {
     Design: "bg-pink-50 text-pink-600 border-pink-200",
 };
 
-const containerVariants = {
-    hidden: {},
-    show: {
-        transition: {
-            staggerChildren: 0.07,
-        },
-    },
-};
-
 const cardVariants = {
     hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
+    show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" as const } },
+    exit: { opacity: 0, y: -12, transition: { duration: 0.2 } },
 };
 
+const allTags = ["All", ...Array.from(new Set(projects.map((p) => p.tag)))];
+
 export default function ProjectsPage() {
+    const [activeTag, setActiveTag] = useState("All");
+    const [sortNewest, setSortNewest] = useState(true);
+
+    const filtered = useMemo(() => {
+        const base = activeTag === "All" ? projects : projects.filter((p) => p.tag === activeTag);
+        return [...base].sort((a, b) =>
+            sortNewest ? Number(b.year) - Number(a.year) : Number(a.year) - Number(b.year)
+        );
+    }, [activeTag, sortNewest]);
+
     return (
         <main className="min-h-screen bg-white relative overflow-x-hidden">
             {/* dot grid background */}
             <div
                 className="fixed inset-0 opacity-[0.07] pointer-events-none"
                 style={{
-                    backgroundImage:
-                        "radial-gradient(#000 1px, transparent 1px)",
+                    backgroundImage: "radial-gradient(#000 1px, transparent 1px)",
                     backgroundSize: "24px 24px",
                 }}
             />
 
             {/* header */}
-            <div className="relative z-10 px-6 pt-16 pb-10 max-w-7xl mx-auto">
+            <div className="relative z-10 px-6 pt-16 pb-6 max-w-7xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: -16 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -69,124 +73,174 @@ export default function ProjectsPage() {
                         </div>
                         <div className="flex items-center gap-2 text-gray-300 border border-gray-100 rounded-full px-4 py-2 text-sm font-medium">
                             <FolderOpen size={14} />
-                            <span>{projects.length} projects</span>
+                            <span>{filtered.length} / {projects.length} projects</span>
                         </div>
                     </div>
 
                     {/* divider */}
-                    <div className="mt-10 h-px bg-gray-100" />
+                    <div className="mt-8 h-px bg-gray-100" />
+                </motion.div>
+            </div>
+
+            {/* filters */}
+            <div className="relative z-10 px-6 pb-8 max-w-7xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.15 }}
+                    className="flex flex-wrap items-center gap-3"
+                >
+                    {/* tag pills */}
+                    <div className="flex flex-wrap gap-2">
+                        {allTags.map((tag) => (
+                            <button
+                                key={tag}
+                                onClick={() => setActiveTag(tag)}
+                                className={`px-3 py-1.5 rounded-full text-xs font-bold border-2 transition-all ${
+                                    activeTag === tag
+                                        ? "bg-black text-white border-black"
+                                        : "bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black"
+                                }`}
+                            >
+                                {tag}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* divider */}
+                    <div className="h-5 w-px bg-gray-200 mx-1" />
+
+                    {/* sort toggle */}
+                    <button
+                        onClick={() => setSortNewest(!sortNewest)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border-2 border-gray-200 text-gray-500 hover:border-black hover:text-black transition-all"
+                    >
+                        <ArrowUpDown size={11} />
+                        {sortNewest ? "newest first" : "oldest first"}
+                    </button>
                 </motion.div>
             </div>
 
             {/* project grid */}
-            <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="show"
-                className="relative z-10 px-6 pb-24 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-            >
-                {projects.map((project) => (
-                    <motion.div
-                        key={project.title}
-                        variants={cardVariants}
-                        whileHover={{ y: -5, boxShadow: "6px 6px 0px 0px #79ABBD" }}
-                        className="group bg-white rounded-2xl border-2 border-gray-100 hover:border-black overflow-hidden flex flex-col transition-all duration-300"
-                    >
-                        {/* image / placeholder */}
-                        <div className="h-44 w-full bg-gray-50 border-b-2 border-gray-100 group-hover:border-black overflow-hidden relative transition-colors duration-300">
-                            {project.image ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                />
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center">
-                                    <Lock size={28} className="text-gray-200" />
-                                </div>
-                            )}
-
-                            {/* year badge */}
-                            <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm border border-gray-200 text-gray-500 text-[10px] font-bold rounded-full px-2.5 py-1 tracking-widest">
-                                {project.year}
-                            </span>
-                        </div>
-
-                        {/* content */}
-                        <div className="p-5 flex flex-col grow">
-                            {/* tag + title */}
-                            <div className="flex items-start justify-between gap-2 mb-2">
-                                <h2 className="text-lg font-black text-black group-hover:text-[#79ABBD] transition-colors leading-tight">
-                                    {project.title}
-                                </h2>
-                                <span
-                                    className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full border ${tagColors[project.tag] ?? "bg-gray-50 text-gray-500 border-gray-200"}`}
-                                >
-                                    {project.tag}
-                                </span>
-                            </div>
-
-                            <p className="text-gray-500 text-sm leading-relaxed font-medium grow mb-4">
-                                {project.description}
-                            </p>
-
-                            {/* tech stack */}
-                            <div className="flex flex-wrap gap-1.5 mb-5">
-                                {project.tech.map((t) => (
-                                    <span
-                                        key={t}
-                                        className="px-2 py-0.5 bg-gray-50 border border-gray-100 text-gray-500 text-[10px] font-bold rounded-md uppercase tracking-wider group-hover:border-[#79ABBD]/40 transition-colors"
-                                    >
-                                        {t}
-                                    </span>
-                                ))}
-                            </div>
-
-                            {/* action buttons */}
-                            <div className="flex items-center gap-2 mt-auto">
-                                {project.liveLink ? (
-                                    <a
-                                        href={project.liveLink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-black text-white rounded-lg text-xs font-bold border-2 border-black hover:bg-gray-800 transition-colors"
-                                    >
-                                        <ExternalLink size={12} />
-                                        Demo
-                                    </a>
-                                ) : (
-                                    <span className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 text-gray-300 rounded-lg text-xs font-bold border-2 border-gray-100 cursor-not-allowed select-none">
-                                        <Lock size={12} />
-                                        Soon
-                                    </span>
-                                )}
-                                {project.repoLink && (
-                                    <a
-                                        href={project.repoLink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-black rounded-lg text-xs font-bold border-2 border-gray-200 hover:border-black transition-colors"
-                                    >
-                                        <Github size={12} />
-                                        Code
-                                    </a>
-                                )}
-                            </div>
-                        </div>
-                    </motion.div>
-                ))}
-
-                {/* "more coming" card */}
+            <div className="relative z-10 px-6 pb-24 max-w-7xl mx-auto">
                 <motion.div
-                    variants={cardVariants}
-                    className="rounded-2xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center p-10 text-center min-h-[200px]"
+                    layout
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
                 >
-                    <p className="text-2xl mb-2">🚧</p>
-                    <p className="text-gray-400 text-sm font-bold">more coming soon</p>
-                    <p className="text-gray-300 text-xs mt-1">always building something</p>
+                    <AnimatePresence mode="popLayout">
+                        {filtered.map((project) => (
+                            <motion.div
+                                key={project.title}
+                                layout
+                                variants={cardVariants}
+                                initial="hidden"
+                                animate="show"
+                                exit="exit"
+                                whileHover={{ y: -5, boxShadow: "6px 6px 0px 0px #79ABBD" }}
+                                className="group bg-white rounded-2xl border-2 border-gray-100 hover:border-black overflow-hidden flex flex-col transition-all duration-300"
+                            >
+                                {/* image / placeholder */}
+                                <div className="h-44 w-full bg-gray-50 border-b-2 border-gray-100 group-hover:border-black overflow-hidden relative transition-colors duration-300">
+                                    {project.image ? (
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img
+                                            src={project.image}
+                                            alt={project.title}
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center">
+                                            <Lock size={28} className="text-gray-200" />
+                                        </div>
+                                    )}
+
+                                    {/* year badge */}
+                                    <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm border border-gray-200 text-gray-500 text-[10px] font-bold rounded-full px-2.5 py-1 tracking-widest">
+                                        {project.year}
+                                    </span>
+                                    {/* featured badge */}
+                                    {project.featured && (
+                                        <span className="absolute top-3 left-3 bg-black text-white text-[10px] font-bold rounded-full px-2.5 py-1 flex items-center gap-1">
+                                            ★ featured
+                                        </span>
+                                    )}
+                                </div>
+
+                                {/* content */}
+                                <div className="p-5 flex flex-col grow">
+                                    {/* tag + title */}
+                                    <div className="flex items-start justify-between gap-2 mb-2">
+                                        <h2 className="text-lg font-black text-black group-hover:text-[#79ABBD] transition-colors leading-tight">
+                                            {project.title}
+                                        </h2>
+                                        <span
+                                            className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full border ${tagColors[project.tag] ?? "bg-gray-50 text-gray-500 border-gray-200"}`}
+                                        >
+                                            {project.tag}
+                                        </span>
+                                    </div>
+
+                                    <p className="text-gray-500 text-sm leading-relaxed font-medium grow mb-4">
+                                        {project.description}
+                                    </p>
+
+                                    {/* tech stack */}
+                                    <div className="flex flex-wrap gap-1.5 mb-5">
+                                        {project.tech.map((t) => (
+                                            <span
+                                                key={t}
+                                                className="px-2 py-0.5 bg-gray-50 border border-gray-100 text-gray-500 text-[10px] font-bold rounded-md uppercase tracking-wider group-hover:border-[#79ABBD]/40 transition-colors"
+                                            >
+                                                {t}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    {/* action buttons */}
+                                    <div className="flex items-center gap-2 mt-auto">
+                                        {project.liveLink && (
+                                            <a
+                                                href={project.liveLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-black text-white rounded-lg text-xs font-bold border-2 border-black hover:bg-gray-800 transition-colors"
+                                            >
+                                                <ExternalLink size={12} />
+                                                Demo
+                                            </a>
+                                        )}
+                                        {project.repoLink && (
+                                            <a
+                                                href={project.repoLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-black rounded-lg text-xs font-bold border-2 border-gray-200 hover:border-black transition-colors"
+                                            >
+                                                <Github size={12} />
+                                                Code
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+
+                    {/* "more coming" card — only shown when viewing all */}
+                    {activeTag === "All" && (
+                        <motion.div
+                            layout
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="rounded-2xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center p-10 text-center min-h-[200px]"
+                        >
+                            <p className="text-2xl mb-2">🚧</p>
+                            <p className="text-gray-400 text-sm font-bold">more coming soon</p>
+                            <p className="text-gray-300 text-xs mt-1">always building something</p>
+                        </motion.div>
+                    )}
                 </motion.div>
-            </motion.div>
+            </div>
         </main>
     );
 }
