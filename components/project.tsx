@@ -60,7 +60,7 @@ export default function Project() {
               
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src={project.image} 
+                src={project.image ?? undefined} 
                 alt={project.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
