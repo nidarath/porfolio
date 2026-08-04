@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "nida.dev - my portfolio",
-  description: "welcome to my portfolio :)",
+  title: "nida.dev - my porfolio",
+  description: "welcome to my porfolio :)",
   icons: {
     icon: '/icon.png',
   },
