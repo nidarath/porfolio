@@ -1,0 +1,15 @@
+@media (hover: hover) and (pointer: fine) {
+  html:not(.soft-petal-cursor-active),
+  html:not(.soft-petal-cursor-active) *,
+  html:not(.soft-petal-cursor-active) *::before,
+  html:not(.soft-petal-cursor-active) *::after {
+    cursor: revert !important;
+  }
+
+  html.soft-petal-cursor-active,
+  html.soft-petal-cursor-active *,
+  html.soft-petal-cursor-active *::before,
+  html.soft-petal-cursor-active *::after {
+    cursor: none !important;
+  }
+}

@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Cat } from "lucide-react";
+import HeroWordmark from "@/components/hero-wordmark";
 
 const navItems = [
-  { id: "hero", label: "start" },
-  { id: "work", label: "my work" },
+  { id: "work", label: "work" },
   { id: "about", label: "about" },
   { id: "contact", label: "contact" },
 ];
@@ -14,81 +14,44 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("hero");
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map((item) => document.getElementById(item.id));
-      const scrollPosition = window.scrollY + 300; 
-
-      sections.forEach((section) => {
-        if (
-          section &&
-          section.offsetTop <= scrollPosition &&
-          section.offsetTop + section.offsetHeight > scrollPosition
-        ) {
-          setActiveSection(section.id);
-        }
-      });
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const marker = window.scrollY + window.innerHeight * 0.4;
+      let active = "hero";
+      for (const item of navItems) {
+        const section = document.getElementById(item.id);
+        if (section && section.offsetTop <= marker) active = item.id;
+      }
+      setActiveSection(active);
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
+    };
   }, []);
-
-  const scrollTo = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <motion.nav
-      initial={{ x: -100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.3, delay: 1, ease: "easeOut" }}
-      className="fixed top-8 left-8 z-50 hidden md:flex flex-col gap-3" 
+      aria-label="Main navigation"
+      initial={{ opacity: 0, y: -12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, delay: 0.2 }}
+      className="fixed left-1/2 top-5 z-50 flex w-[calc(100%-2rem)] max-w-[420px] -translate-x-1/2 items-center justify-between gap-2 rounded-full border border-line bg-paper/90 p-2 shadow-[0_6px_28px_rgba(44,66,72,0.05)] backdrop-blur-xl"
     >
-      <div className="absolute left-1.75 top-2 bottom-2 w-px bg-gray-100 -z-10" />
-
-      <ul className="flex flex-col gap-3"> 
-        {navItems.map((item, index) => {
-          const isActive = activeSection === item.id;
-
-          return (
-            <li
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              className="relative flex items-center gap-3 cursor-pointer group"
-            >
-              <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
-                
-                <div 
-                    className={`w-2 h-2 rounded-full border-[1.5px] transition-all duration-300 ${
-                        isActive ? "border-transparent bg-transparent" : "border-gray-200 bg-white group-hover:border-[#79ABBD]"
-                    }`} 
-                />
-
-                {isActive && (
-                  <motion.div
-                    layoutId="active-cat"
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="absolute inset-0 flex items-center justify-center bg-transparent"
-                  >
-                      <Cat size={16} className="text-[#79ABBD] fill-[#ffffff]" />
-                  </motion.div>
-                )}
-              </div>
-
-              <span
-                className={`text-sm font-light transition-colors duration-300 ${
-                  isActive ? "text-[#79ABBD] font-medium" : "text-gray-400 group-hover:text-[#79ABBD]"
-                }`}
-              >
-                {index + 1}. {item.label}.
-              </span>
-            </li>
-          );
-        })}
-      </ul>
+      <a href="#hero" aria-label="Nida — back to start" aria-current={activeSection === "hero" ? "location" : undefined} className="ml-3 w-[68px] shrink-0 text-ink"><HeroWordmark /></a>
+      <div className="flex items-center gap-0.5">
+        {navItems.map((item) => (
+          <a key={item.id} href={`#${item.id}`} aria-current={activeSection === item.id ? "location" : undefined} className={`rounded-full px-3 py-3 font-mono text-[11px] transition-colors sm:px-5 ${activeSection === item.id ? "bg-cloud text-ink" : "text-muted hover:bg-cloud/70 hover:text-ink"}`}>
+            {item.label}
+          </a>
+        ))}
+      </div>
     </motion.nav>
   );
 }

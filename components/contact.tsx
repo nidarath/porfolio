@@ -1,138 +1,54 @@
 "use client";
+
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Github, Linkedin, Copy, Check, ArrowUpRight } from "lucide-react";
+import PixelMark from "@/components/pixel-mark";
 
+const EMAIL = "nidarzx@gmail.com";
 const socials = [
-  { icon: <Github size={20} />, label: "GitHub", href: "https://github.com/nidarath" },
-  { icon: <Linkedin size={20} />, label: "LinkedIn", href: "https://www.linkedin.com/in/nidarath/" },
+  { icon: Github, label: "github", href: "https://github.com/nidarath" },
+  { icon: Linkedin, label: "linkedin", href: "https://www.linkedin.com/in/nidarath/" },
 ];
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState(false);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   useEffect(() => () => { if (copyTimer.current) clearTimeout(copyTimer.current); }, []);
 
-  const copyEmail = () => {
-    navigator.clipboard.writeText("nidarzx@gmail.com");
-    setCopied(true);
-    if (copyTimer.current) clearTimeout(copyTimer.current);
-    copyTimer.current = setTimeout(() => setCopied(false), 2000);
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      setCopyError(false);
+      if (copyTimer.current) clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setCopied(false), 2500);
+    } catch {
+      setCopyError(true);
+    }
   };
 
   return (
-    <section id="contact" className="min-h-[89vh] w-full bg-white py-20 px-6 md:px-20 overflow-hidden relative">
-      
-      {/* background */}
-      <div className="absolute inset-0 opacity-[0.12]" 
-           style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
-      />
-
-      <div className="max-w-5xl mx-auto relative z-10">
-        
-        {/* header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center md:text-left"
-        >
-          <h2 className="text-4xl font-light text-gray-200 md:text-6xl select-none">
-            say hello.
-          </h2>
-          <h3 className="text-4xl font-black tracking-tighter text-black md:text-5xl -mt-4 md:-mt-8 ml-2">
-            contact<span className="text-[#79ABBD]">.</span>me
-          </h3>
+    <section id="contact" aria-labelledby="contact-heading" className="mx-3 mb-4 rounded-[36px] bg-[#e9f2f5] py-14 sm:mx-5 md:mb-5 md:rounded-[48px] md:py-20">
+      <div className="section-shell">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative mb-10 flex items-start justify-between gap-5 md:mb-14">
+          <div><p className="section-label mb-5">03 <span className="mx-3 text-accent-strong">/</span> get in touch</p><h2 id="contact-heading" className="font-display text-[clamp(3.8rem,9vw,7.5rem)] font-semibold leading-none tracking-[-0.045em] text-ink">let&apos;s talk.</h2></div>
+          <PixelMark className="mt-7 h-14 w-14 shrink-0 text-accent sm:h-20 sm:w-20 md:h-28 md:w-28" />
         </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
-          
-          {/* description */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <p className="text-lg text-gray-600 leading-relaxed font-medium">
-              I&apos;m currently looking for new opportunities. Whether you have a question, 
-              a project idea, or just want to say hi, my inbox is always open!
-            </p>
-
-            {/* socials */}
-            <div>
-              <h4 className="font-bold text-black mb-4 flex items-center gap-2">
-                <span className="w-8 h-0.5 bg-[#79ABBD] inline-block"></span> find me online
-              </h4>
-              <div className="flex flex-wrap gap-3">
-                {socials.map((social, i) => (
-                  <a 
-                    key={i}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 bg-white px-5 py-3 border-2 border-gray-100 text-gray-600 font-bold rounded-xl hover:border-black hover:text-black hover:scale-105 transition-all"
-                  >
-                    {social.icon}
-                    {social.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* right column */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col justify-center gap-4"
-          >
-            
-            {/* copy button */}
-            <motion.div
-              onClick={copyEmail}
-              whileHover={{ y: -5, boxShadow: "8px 8px 0px 0px #79ABBD" }} 
-              whileTap={{ scale: 0.98, boxShadow: "0px 0px 0px 0px #79ABBD" }}
-              className="group relative bg-white border-2 border-black rounded-3xl p-8 cursor-pointer shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] transition-all flex flex-col gap-6"
-            >
-              <div className="flex items-center justify-between">
-                <div className={`p-4 rounded-full border-2 border-black transition-colors ${copied ? 'bg-green-100' : 'bg-[#79ABBD]'}`}>
-                    {copied ? <Check size={32} className="text-black" /> : <Mail size={32} className="text-black" />}
-                </div>
-                
-                <span className={`text-sm font-bold uppercase tracking-wider border-2 border-black px-3 py-1 rounded-full ${copied ? 'bg-green-100 text-black' : 'bg-gray-100 text-gray-500'}`}>
-                  {copied ? "Copied!" : "Click to Copy"}
-                </span>
-              </div>
-              
-              <div>
-                <p className="text-gray-500 font-bold text-sm uppercase tracking-wide mb-1">Drop me a message at</p>
-                <h3 className="text-2xl md:text-3xl font-black text-black group-hover:text-[#79ABBD] transition-colors break-all">
-                  nidarzx@gmail.com
-                </h3>
-              </div>
-
-              <div className="flex items-center gap-2 text-gray-400 group-hover:text-black transition-colors font-medium text-sm">
-                <Copy size={16} /> 
-                {copied ? "Address copied to clipboard" : "Copy email address"}
-              </div>
-            </motion.div>
-
-            {/* email me now*/}
-            <div className="flex justify-end">
-                <a 
-                  href="mailto:nidarzx@gmail.com"
-                  className="text-sm font-bold text-gray-400 hover:text-black flex items-center gap-1 transition-colors"
-                >
-                  or open mail app <ArrowUpRight size={14} />
-                </a>
-            </div>
-
-          </motion.div>
-
+        <div className="grid items-start gap-9 md:grid-cols-2 md:gap-20">
+          <div className="max-w-md">
+            <p className="text-[15px] leading-[1.85] text-ink-soft">I&apos;m looking for new opportunities. Have a project in mind, a question, or just want to say hi? My inbox is always open.</p>
+            <div className="mt-7 flex flex-wrap gap-2.5">{socials.map(({ icon: Icon, label, href }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="pill-link border-white bg-white/75"><Icon size={15} strokeWidth={1.6} aria-hidden="true" />{label}<ArrowUpRight size={13} className="ml-2 text-muted" aria-hidden="true" /></a>)}</div>
+          </div>
+          <div>
+            <button type="button" onClick={copyEmail} aria-label="Copy email address" className="group flex w-full flex-col rounded-[28px] border border-white bg-white/85 p-6 text-left transition-colors hover:bg-white md:p-8">
+              <div className="mb-5 flex w-full items-center justify-between"><span className="flex h-11 w-11 items-center justify-center rounded-full bg-cloud text-accent-strong"><Mail size={19} strokeWidth={1.5} aria-hidden="true" /></span><ArrowUpRight size={20} strokeWidth={1.5} className="text-accent-strong transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" /></div>
+              <span className="font-display text-[clamp(1.4rem,2.6vw,1.9rem)] font-medium tracking-tight text-ink [overflow-wrap:anywhere]">{EMAIL}</span>
+              <span className="mt-4 flex min-h-4 items-center gap-2 font-mono text-[10px] text-muted" aria-live="polite">{copied ? <Check size={13} className="text-[#718b66]" aria-hidden="true" /> : <Copy size={12} aria-hidden="true" />}{copied ? "copied. talk soon!" : copyError ? "couldn't copy — use the mail link below" : "click to copy the address"}</span>
+            </button>
+            <a href={`mailto:${EMAIL}`} className="mt-4 flex min-h-10 items-center justify-end gap-2 font-mono text-[11px] text-ink-soft transition-colors hover:text-accent-strong">or open your mail app <ArrowUpRight size={13} aria-hidden="true" /></a>
+          </div>
         </div>
       </div>
     </section>

@@ -1,109 +1,22 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { Github, ExternalLink, ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { featuredProjects } from "@/lib/projects";
+import ProjectCard from "@/components/project-card";
+import SectionHeading from "@/components/section-heading";
 
 export default function Project() {
   return (
-    <section id="work" className="min-h-screen py-20 bg-white flex flex-col items-center relative overflow-hidden border-t-2 border-gray-100">
-      
-      <div className="absolute inset-0 opacity-[0.12]" 
-           style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
-      />
-
-      <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl px-6 mb-12 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center md:text-left mb-6 md:mb-0" 
-        >
-          <h2 className="text-4xl font-light text-gray-200 md:text-5xl select-none">
-            selected.
-          </h2>
-          <h3 className="text-3xl md:text-4xl font-black text-black tracking-tight -mt-4 md:-mt-6">
-            featured<span className="text-[#79ABBD]">.</span>projects
-          </h3>
+    <section id="work" aria-labelledby="work-heading" className="relative mx-3 rounded-[36px] bg-cloud py-16 sm:mx-5 md:rounded-[48px] md:py-24">
+      <div className="section-shell">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10 flex flex-wrap items-end justify-between gap-7 md:mb-14">
+          <SectionHeading number="01" label="a few things i've made" id="work-heading">selected work</SectionHeading>
+          <a href="/projects" className="pill-link">all projects <ArrowUpRight size={16} aria-hidden="true" /></a>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <motion.a 
-            href="/projects"
-            whileHover={{ y: -4, boxShadow: "6px 6px 0px 0px #79ABBD" }}
-            whileTap={{ y: 0, boxShadow: "0px 0px 0px 0px #79ABBD" }}
-            className="group flex items-center gap-3 px-6 py-3 bg-white text-black rounded-xl text-sm font-black border-2 border-black transition-all duration-300"
-          >
-            view all projects
-            <ArrowRight size={18} className="group-hover:translate-x-1 text-black group-hover:text-[#79ABBD] transition-all duration-300" />
-          </motion.a>
-        </motion.div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 max-w-6xl w-full relative z-10">
-        {featuredProjects.map((project, index) => (
-          <motion.div
-            key={project.title}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            whileHover={{ y: -5, boxShadow: "8px 8px 0px 0px #79ABBD" }} 
-            className="group bg-white rounded-2xl overflow-hidden border-2 border-black transition-all duration-300 flex flex-col"
-          >
-            <div className="h-48 w-full relative border-b-2 border-black bg-gray-200 overflow-hidden">
-              
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img 
-                src={project.image ?? undefined} 
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              
-              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-
-            <div className="p-6 flex flex-col grow">
-              <h3 className="text-xl font-black text-black mb-2 group-hover:text-[#79ABBD] transition-colors">
-                {project.title}
-              </h3>
-              
-              <p className="text-gray-500 mb-4 text-sm leading-relaxed font-medium grow">
-                {project.description}
-              </p>
-
-              {/* tech stack */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.tech.map((tech) => (
-                  <span key={tech} className="px-2 py-1 bg-white border-2 border-gray-100 text-gray-600 text-[10px] font-bold rounded-md group-hover:border-[#79ABBD] transition-colors uppercase tracking-wider">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {/* buttons */}
-              <div className="flex items-center gap-3 mt-auto">
-                <a 
-                  href={project.liveLink ?? undefined}
-                  className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg text-xs font-bold border-2 border-black hover:bg-gray-800 transition-colors"
-                >
-                  <ExternalLink size={14} /> Demo
-                </a>
-                <a 
-                  href={project.repoLink ?? undefined}
-                  className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg text-xs font-bold border-2 border-gray-200 hover:border-black transition-colors"
-                >
-                  <Github size={14} /> Code
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
+          {featuredProjects.map((project, index) => <ProjectCard key={project.title} project={project} index={index} />)}
+        </div>
       </div>
     </section>
   );

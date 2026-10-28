@@ -1,186 +1,80 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { Heart, Cpu, Coffee, Gamepad2, Music, Palette, Briefcase, Award } from "lucide-react";
+import { GraduationCap, ArrowUpRight } from "lucide-react";
+import SectionHeading from "@/components/section-heading";
+import FavoriteObject, { type FavoriteKind } from "@/components/favorite-object";
 
-// data
 const experience = [
-  { 
-    year: "Aug 2025 - Dec 2025", 
-    role: "Full-Stack Developer", 
-    company: "Kids U Donor Database EPICS Project", 
-    desc: "Built a custom full-stack app to optimize data management for a non-profit." 
-  },
-  { 
-    year: "Aug 2025 - Dec 2025", 
-    role: "Mobile Developer", 
-    company: "MedGuide AIMD Project", 
-    desc: "Developed an mobile app to track medication schedules." 
-  },
+  { year: "Aug 2025 — Dec 2025", role: "Full-Stack Developer", company: "Kids U Donor Database EPICS Project", desc: "Built a custom full-stack app to optimize data management for a non-profit." },
+  { year: "Aug 2025 — Dec 2025", role: "Mobile Developer", company: "MedGuide AIMD Project", desc: "Developed a mobile app to track medication schedules." },
 ];
-
-const education = [
-  { 
-    year: "Exp. May 2028", 
-    degree: "B.S. Computer Science", 
-    school: "University of Texas at Dallas",
-    details: "GPA: 3.4 | Top 10% Scholarship"
-  },
-];
-
-const skills = [
-  "Java", "C++", "Python", 
-  "React", "Next.js", "Node.js",
-  "CSS", "Tailwind", "TypeScript", 
-  "PostgreSQL", "MongoDB", 
-  "Git", "Docker", "Figma"
-];
-
-const hobbies = [
-  { icon: <Coffee size={18} />, label: "Tea Enthusiast" },
-  { icon: <Music size={18} />, label: "Listening to Music" },
-  { icon: <Palette size={18} />, label: "Digital Art" },
-  { icon: <Gamepad2 size={18} />, label: "Gaming" },
+const skills = ["Java", "C++", "Python", "React", "Next.js", "Node.js", "CSS", "Tailwind", "TypeScript", "PostgreSQL", "MongoDB", "Git", "Docker", "Figma"];
+const hobbies: { kind: FavoriteKind; label: string; tilt: string }[] = [
+  { kind: "tea", label: "tea enthusiast", tilt: "-rotate-2 group-hover:rotate-2" },
+  { kind: "music", label: "listening to music", tilt: "rotate-2 group-hover:-rotate-2" },
+  { kind: "art", label: "digital art", tilt: "rotate-2 group-hover:-rotate-2" },
+  { kind: "gaming", label: "gaming", tilt: "-rotate-2 group-hover:rotate-2" },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="min-h-screen w-full bg-white px-6 py-20 md:px-20 overflow-hidden relative">
-      <div className="absolute inset-0 opacity-[0.12]" 
-        style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
-      />
-      <div className="max-w-6xl mx-auto relative z-10">
-        
-        {/* header */}
-        <motion.div 
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6"
-        >
-          <div>
-            <h2 className="text-4xl font-light text-gray-200 md:text-6xl select-none">
-              more details.
-            </h2>
-            <h3 className="text-4xl font-black tracking-tighter text-black md:text-5xl -mt-4 md:-mt-8 ml-2">
-              about<span className="text-[#79ABBD]">.</span>me
-            </h3>
-          </div>
-          
-          {/* info badges */}
-          <div className="flex gap-4 text-xs font-bold uppercase tracking-widest text-gray-400">
-            <span className="flex items-center gap-1"><Award size={14} className="text-[#79ABBD]"/> UT Dallas &apos;28</span>
-            <span className="flex items-center gap-1"><Briefcase size={14} className="text-[#79ABBD]"/> Open to Work</span>
+    <section id="about" aria-labelledby="about-heading" className="py-20 md:py-28">
+      <div className="section-shell">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 grid items-end gap-7 md:grid-cols-[1.3fr_1fr] md:gap-16">
+          <SectionHeading number="02" label="the person behind the pixels" id="about-heading">a little about me</SectionHeading>
+          <div className="max-w-sm">
+            <p className="text-[15px] leading-[1.8] text-muted">I&apos;m a computer science student at UT Dallas who loves building fun projects, making digital art, and finding a good cup of tea.</p>
+            <span className="mt-5 inline-flex items-center gap-2 rounded-full bg-sage/70 px-3.5 py-2 font-mono text-[10px] text-[#5b7454]"><span className="h-1.5 w-1.5 rounded-full bg-[#7b9870]" />open to work</span>
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20">
-          
-          {/* timeline */}
-          <div className="md:col-span-7 space-y-12">
-            
-            {/* experience */}
-            <div className="relative">
-              <h4 className="text-xl font-bold mb-8 flex items-center gap-2 text-black">
-                <span className="w-8 h-0.5 bg-[#79ABBD] rounded-full"></span> experience
-              </h4>
-              <div className="border-l-2 border-gray-100 pl-8 space-y-10 ml-2">
-                {experience.map((item, i) => (
-                  <motion.div 
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="relative group"
-                  >
-                    {/* timeline dots */}
-                    <div className="absolute -left-10.25 top-1.5 w-4 h-4 rounded-full bg-white border-4 border-gray-200 group-hover:border-[#79ABBD] transition-colors" />
-                    
-                    <span className="inline-block px-2 py-1 mb-2 text-[10px] font-black uppercase tracking-wider bg-gray-100 rounded-md text-gray-500">
-                      {item.year}
-                    </span>
-                    <h5 className="text-xl font-black text-black leading-tight group-hover:text-[#79ABBD] transition-colors">
-                      {item.role}
-                    </h5>
-                    <p className="text-sm font-bold text-gray-400 mb-2">{item.company}</p>
-                    <p className="text-sm text-gray-600 leading-relaxed font-medium">
-                      {item.desc}
-                    </p>
-                  </motion.div>
+        <div className="grid gap-5 md:grid-cols-12 md:gap-6">
+          <div className="space-y-5 md:col-span-7 md:space-y-6">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-[32px] bg-cloud p-6 md:p-9">
+              <h3 className="mb-8 font-display text-[28px] font-medium tracking-tight text-ink">experience</h3>
+              <ol className="ml-1 space-y-8 border-l border-accent pl-6">
+                {experience.map((item) => (
+                  <li key={item.role} className="relative">
+                    <span className="absolute -left-[28px] top-1 h-[7px] w-[7px] bg-accent-strong" aria-hidden="true" />
+                    <p className="section-label mb-2 text-[10px]">{item.year.toLowerCase()}</p>
+                    <h4 className="text-lg font-semibold tracking-[-0.035em] text-ink">{item.role}</h4>
+                    <p className="mt-1 text-xs font-medium text-accent-strong">{item.company}</p>
+                    <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">{item.desc}</p>
+                  </li>
                 ))}
-              </div>
-            </div>
-
-            {/* education */}
-            <div className="relative">
-              <h4 className="text-xl font-bold mb-8 flex items-center gap-2 text-black">
-                <span className="w-8 h-0.5 bg-[#79ABBD] rounded-full"></span> education
-              </h4>
-              <div className="border-l-2 border-gray-100 pl-8 space-y-10 ml-2">
-                {education.map((item, i) => (
-                  <motion.div 
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="relative group"
-                  >
-                    <div className="absolute -left-10.25 top-1.5 w-4 h-4 rounded-full bg-white border-4 border-gray-200 group-hover:border-[#79ABBD] transition-colors" />
-                    <span className="inline-block px-2 py-1 mb-2 text-[10px] font-black uppercase tracking-wider bg-gray-100 rounded-md text-gray-500">
-                      {item.year}
-                    </span>
-                    <h5 className="text-xl font-black text-black leading-tight group-hover:text-[#79ABBD] transition-colors">{item.degree}</h5>
-                    <p className="text-sm font-bold text-gray-400">{item.school}</p>
-                    <p className="text-xs font-medium text-[#79ABBD] mt-1">{item.details}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
+              </ol>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-[32px] border border-line p-6 md:p-9">
+              <div className="mb-6 flex items-center justify-between gap-4"><h3 className="font-display text-[28px] font-medium tracking-tight text-ink">education</h3><GraduationCap className="h-6 w-6 text-accent-strong" strokeWidth={1.5} aria-hidden="true" /></div>
+              <p className="section-label mb-2 text-[10px]">expected may 2028</p>
+              <h4 className="text-lg font-semibold tracking-tight text-ink">B.S. Computer Science</h4>
+              <p className="mt-1 text-sm text-muted">University of Texas at Dallas</p>
+              <p className="mt-4 font-mono text-[11px] text-accent-strong">GPA 3.4 <span className="mx-2 text-accent">/</span> Top 10% Scholarship</p>
+            </motion.div>
           </div>
 
-          {/* skills + hobbies */}
-          <div className="md:col-span-5 space-y-12">
-            
-            {/* tech skills */}
-            <div>
-              <h4 className="text-xl text-[#e0e0e0] font-bold mb-6 flex items-center gap-2">
-                <Cpu size={20} className="text-black" /> skills.
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {skills.map((tech, i) => (
-                  <motion.span 
-                    key={i}
-                    whileHover={{ y: -2, boxShadow: "3px 3px 0px 0px #79ABBD" }} 
-                    className="px-3 py-1.5 border-2 border-gray-200 bg-white rounded-lg text-xs font-bold text-gray-600 cursor-default transition-all hover:border-black hover:text-black"
-                  >
-                    {tech}
-                  </motion.span>
+          <div className="space-y-5 md:col-span-5 md:space-y-6">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-[32px] border border-line p-6 md:p-9">
+              <p className="section-label mb-2">my toolbox</p>
+              <h3 className="mb-6 font-display text-[28px] font-medium tracking-tight text-ink">things i work with</h3>
+              <div className="flex flex-wrap gap-2">{skills.map((skill) => <span key={skill} className="rounded-full bg-cloud px-3 py-2 font-mono text-[11px] text-ink-soft">{skill}</span>)}</div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-[32px] bg-cream p-6 md:p-9">
+              <p className="section-label mb-2">when i&apos;m away from the keyboard</p>
+              <h3 id="favorites-heading" className="mb-5 font-display text-[28px] font-medium tracking-tight text-ink">a few favorites</h3>
+              <ul aria-labelledby="favorites-heading" className="grid grid-cols-2 gap-x-5 gap-y-5">
+                {hobbies.map(({ kind, label, tilt }) => (
+                  <li key={kind} className="group flex flex-col items-center gap-2 text-center">
+                    <span className={`block h-24 w-24 transition-transform duration-300 ease-out group-hover:-translate-y-1 ${tilt}`}>
+                      <FavoriteObject kind={kind} />
+                    </span>
+                    <span className="max-w-[135px] text-balance font-display text-[18px] font-medium leading-[1.15] tracking-[-0.02em] text-ink-soft">{label}</span>
+                  </li>
                 ))}
-              </div>
-            </div>
-
-            {/* hobbies */}
-            <div>
-              <h4 className="text-xl text-[#e0e0e0] font-bold mb-6 flex items-center gap-2">
-                <Heart size={20} className="text-black" /> hobbies.
-              </h4>
-              <div className="grid grid-cols-2 gap-3">
-                {hobbies.map((hobby, i) => (
-                  <motion.div 
-                    key={i}
-                    whileHover={{ scale: 1.02 }}
-                    className="flex items-center gap-3 p-3 rounded-xl border-2 border-gray-100 bg-white hover:border-black transition-colors"
-                  >
-                    <div className="p-2 bg-[#d4f0fa] text-[#79ABBD] rounded-full">
-                      {hobby.icon}
-                    </div>
-                    <span className="text-xs font-bold text-gray-700">{hobby.label}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
+              </ul>
+            </motion.div>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between rounded-full border border-line px-6 py-4 font-mono text-xs text-muted transition-colors hover:bg-cloud hover:text-ink">the longer version <span className="flex items-center gap-2 text-ink">my resume <ArrowUpRight size={14} aria-hidden="true" /></span></a>
           </div>
         </div>
       </div>

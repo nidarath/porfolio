@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+/* The shared visual language for the portfolio. */
+@theme inline {
+  --font-display: var(--font-rounded);
+  --color-ink: #2c4248;
+  --color-ink-soft: #486168;
+  --color-muted: #6b7f86;
+  --color-accent: #b8d5df;
+  --color-accent-strong: #4d7d94;
+  --color-cloud: #f0f6f7;
+  --color-sage: #e3ebdc;
+  --color-cream: #f8f9f5;
+  --color-line: #dde7e8;
+  --color-paper: #ffffff;
+}
+
+:root {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #2c4248;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: #dbeaf0; color: #2c4248; }
+:focus-visible { outline: 2px solid #4d7d94; outline-offset: 5px; }
+section[id] { scroll-margin-top: 108px; }
+
+@layer components {
+  .section-shell { @apply relative mx-auto w-full max-w-[1200px] px-6 md:px-12; }
+  .section-label { @apply font-mono text-[11px] font-normal tracking-[0.035em] text-muted; }
+  .section-title {
+    @apply font-display font-semibold text-ink;
+    font-size: clamp(2.7rem, 5.8vw, 4.7rem);
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+  }
+  .pill-link {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line bg-paper px-5 py-3 text-sm font-medium text-ink transition-colors;
+  }
+  .pill-link:hover { @apply border-accent bg-cloud; }
+  .tech-tag { @apply rounded-full bg-cloud px-2.5 py-1 font-mono text-[10px] leading-normal text-ink-soft; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
