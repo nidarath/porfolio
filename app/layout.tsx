@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import "./theme.css";
 import CustomCursor from "@/components/cursor";
 import MotionProvider from "@/components/motion-provider";
@@ -36,11 +37,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${inter.variable} ${rounded.variable}`}>
+      <body id="top" className={`${inter.className} ${inter.variable} ${rounded.variable}`}>
         <MotionProvider>
-        <CustomCursor />
-        {children}
+          <CustomCursor />
+          {children}
         </MotionProvider>
+        <Analytics />
       </body>
     </html>
   )
