@@ -1,3 +1,5 @@
+import type { PixelMarkVariant } from "@/components/pixel-mark";
+
 export type Project = {
   title: string;
   description: string;
@@ -6,6 +8,7 @@ export type Project = {
   liveLink: string | null;
   repoLink: string | null;
   tag: string;
+  symbol: PixelMarkVariant;
   year: string;
   featured?: boolean;
 };
@@ -20,6 +23,7 @@ export const projects: Project[] = [
     liveLink: "https://youtu.be/vfM3Prxhggk",
     repoLink: "https://github.com/Nsujatno/MedGuide",
     tag: "Mobile",
+    symbol: "pill",
     year: "2025",
     featured: true,
   },
@@ -32,6 +36,7 @@ export const projects: Project[] = [
     liveLink: "https://youtu.be/xM_jzEvte0I",
     repoLink: "https://github.com/UTDallasEPICS/Kids-U-Donor-Volunteer-Database",
     tag: "Full-Stack",
+    symbol: "database",
     year: "2025",
     featured: true,
   },
@@ -44,6 +49,7 @@ export const projects: Project[] = [
     liveLink: "https://www.youtube.com/watch?v=R-fUu01G1gE",
     repoLink: "https://github.com/Nsujatno/hackutd25",
     tag: "AI / Hackathon",
+    symbol: "kanban",
     year: "2025",
     featured: true,
   },
@@ -56,6 +62,7 @@ export const projects: Project[] = [
     liveLink: null,
     repoLink: "https://github.com/Nsujatno/minesweeper-co-op-game",
     tag: "Game",
+    symbol: "game",
     year: "2026",
   },
   {
@@ -67,6 +74,7 @@ export const projects: Project[] = [
     liveLink: null,
     repoLink: "https://github.com/Nsujatno/GreenGain",
     tag: "AI / Hackathon",
+    symbol: "leaf",
     year: "2026",
   },
   {
@@ -78,6 +86,7 @@ export const projects: Project[] = [
     liveLink: null,
     repoLink: "https://github.com/Nsujatno/hack-ai-2026",
     tag: "AI / Hackathon",
+    symbol: "duel",
     year: "2026",
   },
   {
@@ -89,6 +98,7 @@ export const projects: Project[] = [
     liveLink: null,
     repoLink: "https://github.com/nidarath/ascii-visualizer",
     tag: "Design",
+    symbol: "binary",
     year: "2026",
   },
 ];
